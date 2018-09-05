@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.books.mapper.CommoditylistMapper" >
+  <resultMap id="BaseResultMap" type="com.books.po.Commoditylist" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
+    <result column="cprice" property="cprice" jdbcType="REAL" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="cnumber" property="cnumber" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.books.po.CommoditylistWithBLOBs" extends="BaseResultMap" >
+    <result column="cinf" property="cinf" jdbcType="LONGVARCHAR" />
+    <result column="cpic" property="cpic" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cid, cname, cprice, ctype, cnumber, comment
+  </sql>
+  <sql id="Blob_Column_List" >
+    cinf, cpic
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.books.po.CommoditylistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commoditylist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.books.po.CommoditylistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from commoditylist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commoditylist
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from commoditylist
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.books.po.CommoditylistExample" >
+    delete from commoditylist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.books.po.CommoditylistWithBLOBs" >
+    insert into commoditylist (cid, cname, cprice, 
+      ctype, cnumber, comment, 
+      cinf, cpic)
+    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{cprice,jdbcType=REAL}, 
+      #{ctype,jdbcType=VARCHAR}, #{cnumber,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{cinf,jdbcType=LONGVARCHAR}, #{cpic,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.books.po.CommoditylistWithBLOBs" >
+    insert into commoditylist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="cprice != null" >
+        cprice,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="cnumber != null" >
+        cnumber,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="cinf != null" >
+        cinf,
+      </if>
+      <if test="cpic != null" >
+        cpic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cprice != null" >
+        #{cprice,jdbcType=REAL},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="cnumber != null" >
+        #{cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="cinf != null" >
+        #{cinf,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cpic != null" >
+        #{cpic,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.books.po.CommoditylistExample" resultType="java.lang.Integer" >
+    select count(*) from commoditylist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update commoditylist
+    <set >
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cname != null" >
+        cname = #{record.cname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cprice != null" >
+        cprice = #{record.cprice,jdbcType=REAL},
+      </if>
+      <if test="record.ctype != null" >
+        ctype = #{record.ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnumber != null" >
+        cnumber = #{record.cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cinf != null" >
+        cinf = #{record.cinf,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.cpic != null" >
+        cpic = #{record.cpic,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update commoditylist
+    set cid = #{record.cid,jdbcType=INTEGER},
+      cname = #{record.cname,jdbcType=VARCHAR},
+      cprice = #{record.cprice,jdbcType=REAL},
+      ctype = #{record.ctype,jdbcType=VARCHAR},
+      cnumber = #{record.cnumber,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      cinf = #{record.cinf,jdbcType=LONGVARCHAR},
+      cpic = #{record.cpic,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update commoditylist
+    set cid = #{record.cid,jdbcType=INTEGER},
+      cname = #{record.cname,jdbcType=VARCHAR},
+      cprice = #{record.cprice,jdbcType=REAL},
+      ctype = #{record.ctype,jdbcType=VARCHAR},
+      cnumber = #{record.cnumber,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.books.po.CommoditylistWithBLOBs" >
+    update commoditylist
+    <set >
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cprice != null" >
+        cprice = #{cprice,jdbcType=REAL},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="cnumber != null" >
+        cnumber = #{cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="cinf != null" >
+        cinf = #{cinf,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cpic != null" >
+        cpic = #{cpic,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.books.po.CommoditylistWithBLOBs" >
+    update commoditylist
+    set cname = #{cname,jdbcType=VARCHAR},
+      cprice = #{cprice,jdbcType=REAL},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      cnumber = #{cnumber,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      cinf = #{cinf,jdbcType=LONGVARCHAR},
+      cpic = #{cpic,jdbcType=LONGVARBINARY}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.books.po.Commoditylist" >
+    update commoditylist
+    set cname = #{cname,jdbcType=VARCHAR},
+      cprice = #{cprice,jdbcType=REAL},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      cnumber = #{cnumber,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <select id = "findCommodityAll" resultMap = "BaseResultMap">
+  	select * from commoditylist 
+  </select>
+  <!--  条件查询 -->
+  <select id="findByName" resultMap="BaseResultMap">
+			select * from commoditylist where cname=#{cname} 
+</select>
+  <select id="findByType" resultMap="BaseResultMap">
+			select * from commoditylist where ctype like #{ctype} 
+</select>
+  <select id="findByPrice" resultMap="BaseResultMap">
+			select * from commoditylist where cprice like #{cprice} 
+</select>
+  <select id="findByCombination" resultMap="BaseResultMap">
+			select * from commoditylist where cname like #{arg0}  and ctype like #{arg1}
+</select>
+</mapper>

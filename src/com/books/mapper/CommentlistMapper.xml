@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.books.mapper.CommentlistMapper" >
+  <resultMap id="BaseResultMap" type="com.books.po.Commentlist" >
+    <id column="PID" property="pid" jdbcType="INTEGER" />
+    <result column="PDate" property="pdate" jdbcType="DATE" />
+    <result column="PRDate" property="prdate" jdbcType="DATE" />
+    <result column="CID" property="cid" jdbcType="INTEGER" />
+    <result column="UID" property="uid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.books.po.CommentlistWithBLOBs" extends="BaseResultMap" >
+    <result column="PContent" property="pcontent" jdbcType="LONGVARCHAR" />
+    <result column="PReplay" property="preplay" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pid, pdate, prdate, cid, uid
+  </sql>
+  <sql id="Blob_Column_List" >
+    pcontent, preplay
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.books.po.CommentlistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commentlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.books.po.CommentlistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from commentlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commentlist
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from commentlist
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.books.po.CommentlistExample" >
+    delete from commentlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.books.po.CommentlistWithBLOBs" >
+    insert into commentlist (pid, pdate, prdate, 
+      cid, uid, pcontent, 
+      preplay)
+    values (#{pid,jdbcType=INTEGER}, #{pdate,jdbcType=DATE}, #{prdate,jdbcType=DATE}, 
+      #{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{pcontent,jdbcType=LONGVARCHAR}, 
+      #{preplay,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.books.po.CommentlistWithBLOBs" >
+    insert into commentlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pdate != null" >
+        pdate,
+      </if>
+      <if test="prdate != null" >
+        prdate,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="pcontent != null" >
+        pcontent,
+      </if>
+      <if test="preplay != null" >
+        preplay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pdate != null" >
+        #{pdate,jdbcType=DATE},
+      </if>
+      <if test="prdate != null" >
+        #{prdate,jdbcType=DATE},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="pcontent != null" >
+        #{pcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="preplay != null" >
+        #{preplay,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.books.po.CommentlistExample" resultType="java.lang.Integer" >
+    select count(*) from commentlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update commentlist
+    <set >
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdate != null" >
+        pdate = #{record.pdate,jdbcType=DATE},
+      </if>
+      <if test="record.prdate != null" >
+        prdate = #{record.prdate,jdbcType=DATE},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pcontent != null" >
+        pcontent = #{record.pcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.preplay != null" >
+        preplay = #{record.preplay,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update commentlist
+    set pid = #{record.pid,jdbcType=INTEGER},
+      pdate = #{record.pdate,jdbcType=DATE},
+      prdate = #{record.prdate,jdbcType=DATE},
+      cid = #{record.cid,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      pcontent = #{record.pcontent,jdbcType=LONGVARCHAR},
+      preplay = #{record.preplay,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update commentlist
+    set pid = #{record.pid,jdbcType=INTEGER},
+      pdate = #{record.pdate,jdbcType=DATE},
+      prdate = #{record.prdate,jdbcType=DATE},
+      cid = #{record.cid,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.books.po.CommentlistWithBLOBs" >
+    update commentlist
+    <set >
+      <if test="pdate != null" >
+        pdate = #{pdate,jdbcType=DATE},
+      </if>
+      <if test="prdate != null" >
+        prdate = #{prdate,jdbcType=DATE},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="pcontent != null" >
+        pcontent = #{pcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="preplay != null" >
+        preplay = #{preplay,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.books.po.CommentlistWithBLOBs" >
+    update commentlist
+    set pdate = #{pdate,jdbcType=DATE},
+      prdate = #{prdate,jdbcType=DATE},
+      cid = #{cid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      pcontent = #{pcontent,jdbcType=LONGVARCHAR},
+      preplay = #{preplay,jdbcType=LONGVARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.books.po.Commentlist" >
+    update commentlist
+    set pdate = #{pdate,jdbcType=DATE},
+      prdate = #{prdate,jdbcType=DATE},
+      cid = #{cid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <select id = "selectCommentAll" resultMap = "BaseResultMap">
+  	select * from commentlist
+  </select>
+</mapper>

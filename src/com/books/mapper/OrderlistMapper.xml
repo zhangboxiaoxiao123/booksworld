@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.books.mapper.OrderlistMapper" >
+  <resultMap id="BaseResultMap" type="com.books.po.Orderlist" >
+    <id column="oid" property="oid" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="odate" property="odate" jdbcType="DATE" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
+    <result column="sum" property="sum" jdbcType="REAL" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="cnumber" property="cnumber" jdbcType="VARCHAR" />
+    <result column="uzip" property="uzip" jdbcType="VARCHAR" />
+    <result column="uphone" property="uphone" jdbcType="VARCHAR" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="uaddress" property="uaddress" jdbcType="VARCHAR" />
+    <result column="ostatus" property="ostatus" jdbcType="VARCHAR" />
+    <result column="operiod" property="operiod" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, cid, uid, odate, cname, sum, ctype, cnumber, uzip, uphone, uname, uaddress, 
+    ostatus, operiod
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.books.po.OrderlistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderlist
+    where oid = #{oid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderlist
+    where oid = #{oid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.books.po.OrderlistExample" >
+    delete from orderlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.books.po.Orderlist" >
+    insert into orderlist (oid, cid, uid, 
+      odate, cname, sum, ctype, 
+      cnumber, uzip, uphone, 
+      uname, uaddress, ostatus, 
+      operiod)
+    values (#{oid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{odate,jdbcType=DATE}, #{cname,jdbcType=VARCHAR}, #{sum,jdbcType=REAL}, #{ctype,jdbcType=VARCHAR}, 
+      #{cnumber,jdbcType=VARCHAR}, #{uzip,jdbcType=VARCHAR}, #{uphone,jdbcType=VARCHAR}, 
+      #{uname,jdbcType=VARCHAR}, #{uaddress,jdbcType=VARCHAR}, #{ostatus,jdbcType=VARCHAR}, 
+      #{operiod,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.books.po.Orderlist" >
+    insert into orderlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="odate != null" >
+        odate,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="sum != null" >
+        sum,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="cnumber != null" >
+        cnumber,
+      </if>
+      <if test="uzip != null" >
+        uzip,
+      </if>
+      <if test="uphone != null" >
+        uphone,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="uaddress != null" >
+        uaddress,
+      </if>
+      <if test="ostatus != null" >
+        ostatus,
+      </if>
+      <if test="operiod != null" >
+        operiod,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="odate != null" >
+        #{odate,jdbcType=DATE},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=REAL},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="cnumber != null" >
+        #{cnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="uzip != null" >
+        #{uzip,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null" >
+        #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uaddress != null" >
+        #{uaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ostatus != null" >
+        #{ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operiod != null" >
+        #{operiod,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.books.po.OrderlistExample" resultType="java.lang.Integer" >
+    select count(*) from orderlist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderlist
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.odate != null" >
+        odate = #{record.odate,jdbcType=DATE},
+      </if>
+      <if test="record.cname != null" >
+        cname = #{record.cname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sum != null" >
+        sum = #{record.sum,jdbcType=REAL},
+      </if>
+      <if test="record.ctype != null" >
+        ctype = #{record.ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnumber != null" >
+        cnumber = #{record.cnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uzip != null" >
+        uzip = #{record.uzip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uphone != null" >
+        uphone = #{record.uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uaddress != null" >
+        uaddress = #{record.uaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ostatus != null" >
+        ostatus = #{record.ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operiod != null" >
+        operiod = #{record.operiod,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderlist
+    set oid = #{record.oid,jdbcType=INTEGER},
+      cid = #{record.cid,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      odate = #{record.odate,jdbcType=DATE},
+      cname = #{record.cname,jdbcType=VARCHAR},
+      sum = #{record.sum,jdbcType=REAL},
+      ctype = #{record.ctype,jdbcType=VARCHAR},
+      cnumber = #{record.cnumber,jdbcType=VARCHAR},
+      uzip = #{record.uzip,jdbcType=VARCHAR},
+      uphone = #{record.uphone,jdbcType=VARCHAR},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      uaddress = #{record.uaddress,jdbcType=VARCHAR},
+      ostatus = #{record.ostatus,jdbcType=VARCHAR},
+      operiod = #{record.operiod,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.books.po.Orderlist" >
+    update orderlist
+    <set >
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="odate != null" >
+        odate = #{odate,jdbcType=DATE},
+      </if>
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        sum = #{sum,jdbcType=REAL},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="cnumber != null" >
+        cnumber = #{cnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="uzip != null" >
+        uzip = #{uzip,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null" >
+        uphone = #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uaddress != null" >
+        uaddress = #{uaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ostatus != null" >
+        ostatus = #{ostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operiod != null" >
+        operiod = #{operiod,jdbcType=DATE},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.books.po.Orderlist" >
+    update orderlist
+    set
+      uname = #{uname,jdbcType=VARCHAR},
+      uphone = #{uphone,jdbcType=VARCHAR},	
+      uaddress = #{uaddress,jdbcType=VARCHAR},
+      uzip = #{uzip,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+  <select id = "selectOrderAll" resultMap = "BaseResultMap">
+  	select * from orderlist
+  </select>
+  <update id="updateStatus">
+	update orderlist set
+	ostatus = #{arg0}
+	where oid = #{arg1}  
+  </update>
+
+  <insert id="addOrder" parameterType="java.util.List">
+		insert into orderlist(oid,odate,ostatus,cid,uid,cname,ctype,cnumber,uzip,uphone,uname) values
+			<foreach collection="list" item="item" index="index" separator=",">
+				 (#{item.oid},#{item.odate},#{item.ostatus},#{item.cartlist.cid},#{item.userlist.uid},
+				 #{item.commoditylist.cname},#{item.commoditylist.ctype},
+				 #{item.commoditylist.cnumber},#{item.userlist.uzip},#{item.userlist.uphone},#{item.userlist.uname})
+			</foreach>
+	</insert>
+</mapper>
